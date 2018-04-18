@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import {withStyles} from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
+import ReactHtmlParser from 'react-html-parser';
+import AppBar from 'material-ui/AppBar';
+import Toolbar from 'material-ui/Toolbar';
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -36,7 +39,15 @@ class Detail extends Component {
     const data = this.props.location.state.content;
     const featureMedia = this.props.location.state.featureMedia;
     return (
-      <div className={classes.root}>
+      <div>
+        <AppBar position="fixed" color="default">
+              <Toolbar>
+                <Typography variant="title" color="inherit">
+                  Detail
+                </Typography>
+              </Toolbar>
+            </AppBar>
+      <div className={classes.root} style={{marginTop: 64}}>
         <div className={classes.paperContainer}>
         <Paper className={classes.paper} elevation={4}>
           <div className={classes.head}>
@@ -45,13 +56,14 @@ class Detail extends Component {
           {
             data.map((e, index)=> (
                 <div key={index}>
-                  <Typography gutterBottom >{ e.text }</Typography>
+                  <Typography gutterBottom >{ ReactHtmlParser(e.text) }</Typography>
                 </div>
               )
             )
           }
         </Paper>
         </div>
+      </div>
       </div>
     );
   }
